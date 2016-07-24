@@ -41,27 +41,21 @@ class Sprite extends FlxSprite
 	override public function update(elapsed:Float):Void
 	{
 		velocity.x = 0;
-		#if cpp
-		
-		for (touch in FlxG.touches.list)
-		{
-			if (touch.justPressed) {}
-			if (touch.pressed) {}
-			if (touch.justReleased) {}
-		}
-		#end
+		FlxG.log.add("update ============= "+velocity.x);
 		
 	#if (flash || js)
 		if (FlxG.keys.pressed.LEFT)
 		{
-			facing = FlxObject.LEFT;
-			velocity.x -= 300;
+			//facing = FlxObject.LEFT;
+			//velocity.x -= 300;
+			turn_left();
 		}
 		
 		if (FlxG.keys.pressed.RIGHT)
 		{
-			facing = FlxObject.RIGHT;
-			velocity.x += 300;
+			//facing = FlxObject.RIGHT;
+			//velocity.x += 300;
+			turn_right();
 		}
 		
 		if (isTouching(FlxObject.FLOOR) && FlxG.keys.pressed.UP)
@@ -81,6 +75,30 @@ class Sprite extends FlxSprite
 	#end
 		
 		super.update(elapsed);
+	}
+	
+	public function turn_left():Void
+	{
+		facing = FlxObject.LEFT;
+		this.velocity.x -= 300;
+		FlxG.log.add("turn_left  ============= " + velocity.x);
+		
+	}
+	
+	public function turn_right():Void
+	{
+		facing = FlxObject.RIGHT;
+		this.velocity.x += 300;
+		FlxG.log.add("turn_right  ============= " + velocity.x);
+		
+	}
+	
+	public function jump():Void
+	{
+		if (isTouching(FlxObject.FLOOR))
+		{
+			velocity.y = -300;
+		}
 	}
 	
 	override public function destroy():Void 
