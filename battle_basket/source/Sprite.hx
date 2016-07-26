@@ -15,6 +15,8 @@ import flixel.FlxG;
  */
 class Sprite extends FlxSprite
 {
+	private var _go_right:Bool;
+	private var _go_left:Bool;
 	
 	public function new(X:Float=0, Y:Float=0,Graphic:FlxGraphicAsset,Width:Int = 0, Height:Int = 0) 
 	{
@@ -36,33 +38,40 @@ class Sprite extends FlxSprite
 		
 		//antialiasing = true;
 		acceleration.y = 980;
+		_go_right = false;
+		_go_left = false;
 	}
 	
 	override public function update(elapsed:Float):Void
 	{
 		velocity.x = 0;
-		FlxG.log.add("update ============= "+velocity.x);
 		
-	#if (flash || js)
-		if (FlxG.keys.pressed.LEFT)
-		{
-			//facing = FlxObject.LEFT;
-			//velocity.x -= 300;
-			turn_left();
-		}
+		#if mobile
+			if (_go_right) turn_right();
+			if (_go_left) turn_left();
+		#end
 		
-		if (FlxG.keys.pressed.RIGHT)
-		{
-			//facing = FlxObject.RIGHT;
-			//velocity.x += 300;
-			turn_right();
-		}
-		
-		if (isTouching(FlxObject.FLOOR) && FlxG.keys.pressed.UP)
-		{
-			velocity.y = -300;
-		}
-		
+		#if (flash || js)
+			if (FlxG.keys.pressed.LEFT)
+			{
+				//facing = FlxObject.LEFT;
+				//velocity.x -= 300;
+				turn_left();
+			}
+			
+			if (FlxG.keys.pressed.RIGHT)
+			{
+				//facing = FlxObject.RIGHT;
+				//velocity.x += 300;
+				turn_right();
+			}
+			
+			if (isTouching(FlxObject.FLOOR) && FlxG.keys.pressed.UP)
+			{
+				velocity.y = -500;
+			}
+		#end
+	
 		if ( !isTouching(FlxObject.FLOOR))
 		{
 			animation.play("jump");
@@ -72,16 +81,26 @@ class Sprite extends FlxSprite
 			if (velocity.x == 0) animation.play("idle");
 			else animation.play("walk");
 		}
-	#end
+	
 		
 		super.update(elapsed);
+	}
+	
+	public function go_right(val:Bool):Void
+	{
+		_go_right = val;
+	}
+	
+	public function go_left(val:Bool):Void
+	{
+		_go_left = val;
 	}
 	
 	public function turn_left():Void
 	{
 		facing = FlxObject.LEFT;
 		this.velocity.x -= 300;
-		FlxG.log.add("turn_left  ============= " + velocity.x);
+		//FlxG.log.add("turn_left  ============= " + velocity.x);
 		
 	}
 	
@@ -89,7 +108,7 @@ class Sprite extends FlxSprite
 	{
 		facing = FlxObject.RIGHT;
 		this.velocity.x += 300;
-		FlxG.log.add("turn_right  ============= " + velocity.x);
+		//FlxG.log.add("turn_right  ============= " + velocity.x);
 		
 	}
 	

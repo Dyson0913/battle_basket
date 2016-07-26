@@ -17,7 +17,7 @@ class Main extends Sprite
 		_model = new Model();
 		addChild(new FlxGame(1920, 1080, MenuState));
 		
-		FlxG.debugger.visible = true;
+		//FlxG.debugger.visible = true;
 		FlxG.camera.antialiasing = true;
 		//FlxG.log.add("width = "+FlxG.stage.width);
 		//FlxG.log.add("high = "+FlxG.stage.height);
