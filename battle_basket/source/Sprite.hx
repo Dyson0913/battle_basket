@@ -15,8 +15,10 @@ import flixel.FlxG;
  */
 class Sprite extends FlxSprite
 {
-	private var _go_right:Bool;
-	private var _go_left:Bool;
+	public var state( default, default ):SpriteState;
+	
+	private var _move_speed:Float;
+	private var _jump_speed:Float;
 	
 	public function new(X:Float=0, Y:Float=0,Graphic:FlxGraphicAsset,Width:Int = 0, Height:Int = 0) 
 	{
@@ -38,85 +40,58 @@ class Sprite extends FlxSprite
 		
 		//antialiasing = true;
 		acceleration.y = 980;
-		_go_right = false;
-		_go_left = false;
+		state = SpriteState.idel;
+		_move_speed = 500;
+		_jump_speed = 500;
+		
+		//FlxG.watch.add(this, "state");
+		//FlxG.watch.add(this, "velocity");
+		
 	}
 	
 	override public function update(elapsed:Float):Void
 	{
 		velocity.x = 0;
 		
-		#if mobile
-			if (_go_right) turn_right();
-			if (_go_left) turn_left();
-		#end
+		//位移
+		if (state == SpriteState.right) turn_right();
+		if (state == SpriteState.left) turn_left();
 		
-		#if (flash || js)
-			if (FlxG.keys.pressed.LEFT)
-			{
-				//facing = FlxObject.LEFT;
-				//velocity.x -= 300;
-				turn_left();
-			}
-			
-			if (FlxG.keys.pressed.RIGHT)
-			{
-				//facing = FlxObject.RIGHT;
-				//velocity.x += 300;
-				turn_right();
-			}
-			
-			if (isTouching(FlxObject.FLOOR) && FlxG.keys.pressed.UP)
-			{
-				velocity.y = -500;
-			}
-		#end
-	
-		if ( !isTouching(FlxObject.FLOOR))
+		
+		//影格切換
+		if (isTouching(FlxObject.FLOOR)) 
 		{
-			animation.play("jump");
+			if (state == SpriteState.right) animation.play("walk");
+			else if (state == SpriteState.left) animation.play("walk");
+			else if (state == SpriteState.idel) animation.play("idle");
+			
+			if (state == SpriteState.jump && velocity.y ==0) animation.play("idle");
 		}
-		else
-		{
-			if (velocity.x == 0) animation.play("idle");
-			else animation.play("walk");
-		}
+		
 	
 		
 		super.update(elapsed);
 	}
 	
-	public function go_right(val:Bool):Void
-	{
-		_go_right = val;
-	}
-	
-	public function go_left(val:Bool):Void
-	{
-		_go_left = val;
-	}
-	
 	public function turn_left():Void
 	{
 		facing = FlxObject.LEFT;
-		this.velocity.x -= 300;
-		//FlxG.log.add("turn_left  ============= " + velocity.x);
-		
+		velocity.x -= _move_speed;
 	}
 	
 	public function turn_right():Void
 	{
 		facing = FlxObject.RIGHT;
-		this.velocity.x += 300;
-		//FlxG.log.add("turn_right  ============= " + velocity.x);
-		
+		velocity.x += _move_speed;
 	}
 	
 	public function jump():Void
 	{
-		if (isTouching(FlxObject.FLOOR))
+		if (isTouching(FlxObject.FLOOR)) 
 		{
-			velocity.y = -300;
+			velocity.y = -_jump_speed;
+			animation.play("jump");
+			state = SpriteState.jump;
 		}
 	}
 	
@@ -125,4 +100,12 @@ class Sprite extends FlxSprite
 		// Make sure that this object is removed from the MouseEventManager for GC
 		super.destroy();
 	}
+}
+
+enum SpriteState
+{
+	idel;
+	left;
+	right;
+	jump;
 }
