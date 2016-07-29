@@ -1,4 +1,4 @@
-package;
+package visual_component;
 
 import flixel.FlxObject;
 import flixel.FlxSprite;
@@ -13,7 +13,7 @@ import flixel.FlxG;
  * ...
  * @author Dyson0913
  */
-class Sprite extends FlxSprite
+class Character extends FlxSprite
 {
 	public var state( default, default ):SpriteState;
 	

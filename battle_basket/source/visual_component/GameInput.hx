@@ -72,22 +72,30 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 		_shot.scale.set(2, 2);
 		add(_shot);
 		
+		disappear(1);
+		
 		//event
-		Main._model.NewRoundState.add(appear);
-		Main._model.StartBetState.add(appear);
-		Main._model.EndBetState.add(disappear);
-		Main._model.OpenState.add(disappear);
-		Main._model.EndRoundState.add(appear);
+		Main._model.Menu.add(disappear);
+		Main._model.SelectRole.add(disappear);
+		Main._model.playing.add(appear);
+		Main._model.Settle.add(disappear);
+		
 	}
 	
 	private function appear(s:Dynamic):Void
 	{
-		
+		_up.revive();
+		//_down.revive();
+		_left.revive();
+		_right.revive();
 	}
 	
 	private function disappear(s:Dynamic):Void
 	{		
-		
+		_up.kill();
+		//_down.kill();
+		_left.kill();
+		_right.kill();
 	}
 	
 	override public function update(elapsed:Float):Void
@@ -95,7 +103,6 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 		#if (flash || js)
 		if (FlxG.mouse.pressed) 
 		{
-			//_net.meshVelocity.x = FlxG.random.float(0, _net.maxVelocity.x);
 			//_ball.fireFromAngle(_speed);
 			
 			mouse_pressed.dispatch();
@@ -104,7 +111,6 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 		if (FlxG.mouse.justPressed) {}
 		if (FlxG.mouse.justReleased) 
 		{
-			//_net.meshVelocity.x = 0;
 			
 		}
 		

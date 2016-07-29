@@ -56,11 +56,10 @@ class Model extends FlxObject
 	
 	
 	
-	public var NewRoundState = new Signal<Dynamic>();
-	public var StartBetState = new Signal<Dynamic>();
-	public var EndBetState = new Signal<Dynamic>();
-	public var OpenState = new Signal<Dynamic>();
-	public var EndRoundState = new Signal<Dynamic>();
+	public var Menu = new Signal<Dynamic>();
+	public var SelectRole = new Signal<Dynamic>();
+	public var playing = new Signal<Dynamic>();
+	public var Settle = new Signal<Dynamic>();
 	
 	
 	
@@ -275,6 +274,11 @@ class Model extends FlxObject
         return uid.toString().toLowerCase();
     }
 	
+	public static function font_format(target:FlxText,size:Int,color:FlxColor = FlxColor.WHITE, alig:String = "center"):Void
+	{
+		
+		target.setFormat(AssetPaths.arial__ttf,size, color, alig);
+	}
 	
 }
 
