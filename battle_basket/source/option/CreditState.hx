@@ -1,4 +1,4 @@
-package ;
+package option;
 
 
 import flixel.FlxG;
@@ -6,14 +6,14 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
+import visual_component.CreditList;
 
 import visual_component.GameInput;
-import visual_component.GameMenu;
 import visual_component.Adjust_tool;
 
-class MenuState extends FlxState
+class CreditState extends FlxState
 {
-	private var _gameMenu:GameMenu;
+	private var _credit:CreditList;
 	private var _gameinput:GameInput;
 	
 	private var _adjust:Adjust_tool;
@@ -24,8 +24,8 @@ class MenuState extends FlxState
 		
 		_adjust = new Adjust_tool();
 		
-		_gameMenu = new GameMenu();
-		add(_gameMenu);
+		_credit = new CreditList();
+		add(_credit);
 		
 		_gameinput = new GameInput();
 		add(_gameinput);
@@ -42,7 +42,7 @@ class MenuState extends FlxState
 		_gameinput.up_release.add(cancel);
 		
 		
-		Main._model.Menu.dispatch(1);
+		Main._model.credit.dispatch(1);
 		
 		
 		add(_adjust);

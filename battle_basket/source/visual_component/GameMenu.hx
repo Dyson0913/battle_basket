@@ -8,6 +8,7 @@ import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.FlxSprite;
 import flixel.ui.FlxButton;
+import option.CreditState;
 
 import model.Model;
 
@@ -52,6 +53,7 @@ class GameMenu extends FlxTypedGroup<FlxSprite>
 		Main._model.SelectRole.add(disappear);
 		Main._model.playing.add(disappear);
 		Main._model.Settle.add(disappear);
+		Main._model.credit.add(disappear);
 		
 		Main._model.adjust_item.dispatch(_credit);
 	}
@@ -79,7 +81,7 @@ class GameMenu extends FlxTypedGroup<FlxSprite>
 	
 	private function credit():Void
 	{
-		
+		FlxG.switchState(new CreditState());
 	}
 	
 }

@@ -88,6 +88,8 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 		//_down.revive();
 		_left.revive();
 		_right.revive();
+		
+		_shot.revive();
 	}
 	
 	private function disappear(s:Dynamic):Void
@@ -96,6 +98,8 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 		//_down.kill();
 		_left.kill();
 		_right.kill();
+		
+		_shot.kill();
 	}
 	
 	override public function update(elapsed:Float):Void

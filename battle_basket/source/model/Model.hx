@@ -60,6 +60,7 @@ class Model extends FlxObject
 	public var SelectRole = new Signal<Dynamic>();
 	public var playing = new Signal<Dynamic>();
 	public var Settle = new Signal<Dynamic>();
+	public var credit = new Signal<Dynamic>();
 	
 	
 	

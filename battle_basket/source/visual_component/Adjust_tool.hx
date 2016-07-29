@@ -15,6 +15,10 @@ import model.Model;
 import flixel.util.FlxColor;
 import flixel.input.FlxInput;
 
+import flixel.system.scaleModes.RelativeScaleMode;
+import flixel.system.scaleModes.RatioScaleMode;
+import flixel.system.scaleModes.FillScaleMode;
+
 
 class Adjust_tool extends FlxTypedGroup<FlxSprite>
 {
@@ -47,7 +51,21 @@ class Adjust_tool extends FlxTypedGroup<FlxSprite>
 		_test_btn4 = new FlxButton(350, 20, "-y", ng_y);
 		add(_test_btn4);
 		
+		//add(new FlxButton(100, 50, "test", pack_test));
 		
+		
+	}
+	
+	private function pack_test():Void
+	{
+		//FlxG.scaleMode = new RelativeScaleMode(0.75, 0.75);
+		//FlxG.scaleMode =new RatioScaleMode(true);
+		
+		//FlxG.scaleMode = new FillScaleMode();(true);
+		//FlxG.resizeGame(1920, 1080);
+		
+		//FlxG.log.add("width = "+FlxG.stage.width);
+		//FlxG.log.add("high = "+FlxG.stage.height);
 		
 	}
 	

@@ -11,7 +11,7 @@ import visual_component.GameInput;
 import visual_component.GameMenu;
 import visual_component.Adjust_tool;
 
-class MenuState extends FlxState
+class TemplateState extends FlxState
 {
 	private var _gameMenu:GameMenu;
 	private var _gameinput:GameInput;
