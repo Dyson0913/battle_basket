@@ -2,11 +2,14 @@ package ;
 
 import flixel.FlxG;
 import flixel.FlxSprite;
+import flixel.group.FlxGroup;
 import flixel.FlxState;
 import flixel.text.FlxText;
 import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
+import visual_component.CharSelect;
+import visual_component.GameInput;
 
 import visual_component.Ball;
 import visual_component.Ground;
@@ -16,6 +19,7 @@ import visual_component.Character;
 import flixel.util.helpers.FlxBounds.FlxBounds;
 import flixel.addons.weapon.FlxWeapon;
 import flixel.addons.weapon.FlxBullet;
+import flixel.FlxObject;
 
 class PlayState extends FlxState
 {
@@ -36,12 +40,30 @@ class PlayState extends FlxState
 	private var _speed:FlxBounds<Float>;
 	private var _max_speend:FlxBounds<Float>;
 	
+	private var _gameinput:GameInput;
+	public var group:FlxGroup;
+	
 	override public function create():Void
 	{
 		super.create();
 		
 		_ground = new Ground();
 		add(_ground);
+		
+		//控制要先create,不然會有奇怪的bug(放到最後建,isTouching(FlxObject.FLOOR) 會為false)
+		_gameinput = new GameInput();
+		add(_gameinput);
+		
+		_gameinput.mouse_pressed.add(player_shut);
+		_gameinput.A.add(player_shut);
+		
+		_gameinput.left.add(left);
+		_gameinput.right.add(right);
+		_gameinput.up.add(up);
+		
+		_gameinput.left_release.add(player_reset);
+		_gameinput.right_release.add(player_reset);
+		_gameinput.up_release.add(player_reset);
 		
 		_testBall = new Ball();
 		add(_testBall);
@@ -54,7 +76,9 @@ class PlayState extends FlxState
 		add(_player);
 		
 		_ball_ = new FlxSprite(500, 500, AssetPaths.basketball_48__png);
+
 		add(_ball_);
+		_ball_.kill();
 		
 		//var p:FlxPoint = new FlxPoint();
 			//p.x = 10;
@@ -81,6 +105,8 @@ class PlayState extends FlxState
 		//_ball = new FlxWeapon("name",_bullet_facotry,FlxWeaponFireFrom.PARENT(_player,_offset),FlxWeaponSpeedMode.ACCELERATION(_speed,_max_speend));
 		
 		
+		
+		Main._model.playing.dispatch(1);
 	}
 
 	private function bullet_fac():FlxBullet
@@ -97,7 +123,7 @@ class PlayState extends FlxState
 		FlxG.collide(_ground.group, _ball_);
 		FlxG.collide(_ground.group, _player);
 		
-		FlxG.overlap(_testBall, _player,ball_collect);
+		FlxG.overlap(_testBall.group, _player,ball_collect);
 		
 		super.update(elapsed);
 	}
@@ -129,6 +155,7 @@ class PlayState extends FlxState
 	
 	private function shot():Void
 	{
+		_ball_.revive();
 		var dir:Int = 500;
 		if (_player.facing == FlxObject.RIGHT) dir = 500;
 		else dir = -500;

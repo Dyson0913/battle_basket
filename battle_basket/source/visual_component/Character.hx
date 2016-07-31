@@ -27,8 +27,6 @@ class Character extends FlxSprite
 		var graph:FlxGraphic = FlxG.bitmap.add(Graphic);
 		loadGraphic(Graphic, true, Width, Height);
 		
-		//loadGraphic(AssetPaths.Card__png, true, 194, 194);
-		
 		//tween to idx animation.frameIndex = 1;
 		animation.frameIndex = 0;
 		animation.add("idle", [11]);
@@ -59,6 +57,7 @@ class Character extends FlxSprite
 		
 		
 		//影格切換
+		//FlxG.log.add("char ============= "+isTouching(FlxObject.FLOOR) + " v = "+ velocity.y);
 		if (isTouching(FlxObject.FLOOR)) 
 		{
 			if (state == SpriteState.right) animation.play("walk");
@@ -87,6 +86,7 @@ class Character extends FlxSprite
 	
 	public function jump():Void
 	{
+		//FlxG.log.add("jump ============= "+isTouching(FlxObject.FLOOR) + " v = "+ velocity.y);
 		if (isTouching(FlxObject.FLOOR)) 
 		{
 			velocity.y = -_jump_speed;

@@ -69,7 +69,7 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 		add(_right);
 		
 		_shot = new FlxSprite(1700, 910).loadGraphic(AssetPaths.basketball_72__png);
-		_shot.scale.set(2, 2);
+		_shot.scale.set(3, 3);
 		add(_shot);
 		
 		disappear(1);
