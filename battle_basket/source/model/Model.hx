@@ -55,7 +55,7 @@ class Model extends FlxObject
 	public var socket_error = new Signal<Dynamic>();
 	public var creditUpdate = new Signal<Dynamic>();
 	public var join_game_success = new Signal<Dynamic>();
-	
+	public var time_tick = new Signal<Dynamic>();
 	
 	
 	public var Menu = new Signal<Dynamic>();

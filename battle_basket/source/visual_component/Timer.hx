@@ -66,6 +66,7 @@ class Timer extends FlxTypedGroup<FlxSprite>
 		_ten.loadGraphic("assets/images/share/timer_num/timer_" + ten + ".png");
 		_one.loadGraphic("assets/images/share/timer_num/timer_" + one + ".png");
 		
+		Main._model.time_tick.dispatch(1);
 		if ( timer.loopsLeft == 0)
 		{			
 			disappear(1);

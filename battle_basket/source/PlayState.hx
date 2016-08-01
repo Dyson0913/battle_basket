@@ -57,6 +57,10 @@ class PlayState extends FlxState
 	
 	private var _score_board:FlxSprite;
 	
+	private var _mario:FlxSprite;
+	
+	public var _traGroup:FlxGroup;
+	
 	public var _ready:FlxGroup;
 	
 	override public function create():Void
@@ -146,6 +150,7 @@ class PlayState extends FlxState
 		
 		
 		
+		
 		_ready = new FlxGroup();
 		for (i in 0...(5))
 		{//560
@@ -163,11 +168,36 @@ class PlayState extends FlxState
 		}
 		add(_ready);
 		
+		_traGroup = new FlxGroup();
+		for (i in 0...(5))
+		{
+			var item:FlxSprite = new FlxSprite(i * 140 +1300, 0,AssetPaths.trature__png);
+			item.kill();
+			add(item);
+			_traGroup.add(item);
+		}
+		add(_traGroup);
 
-		add(_adjust);
-		//Main._model.adjust_item.dispatch(_score_board);
+		_mario =  new FlxSprite(1100, 0, AssetPaths.mario__png);
+		
+		
+		Main._model.time_tick.add(timetick);
+		
+		//add(_adjust);
+		//Main._model.adjust_item.dispatch(_mario);
 		
 		//Main._model.playing.dispatch(1);
+	}
+	
+	private function timetick(s:Dynamic):Void
+	{
+		_mario.x += 10;
+	}
+	
+	private function item_show(item:FlxBasic):Void
+	{
+		var myitem:FlxSprite = cast(item, FlxSprite);
+		myitem.revive();
 	}
 	
 	private function put_ready(Tween:FlxTween):Void
@@ -221,6 +251,8 @@ class PlayState extends FlxState
 			add(_score_board);
 			
 			add(_timer);
+			_traGroup.forEach(item_show);
+			add(_mario);
 			
 			Main._model.playing.dispatch(1);
 			
@@ -245,9 +277,16 @@ class PlayState extends FlxState
 		FlxG.collide(_ground.group, _player);
 		FlxG.collide(_ground.group, _opp_player);
 		
+		FlxG.collide(_traGroup, _mario,tra_collect);
+		
 		FlxG.overlap(_testBall.group, _player,ball_collect);
 		
 		super.update(elapsed);
+	}
+	
+	private function tra_collect(item:FlxObject, player:FlxObject):Void
+	{
+		item.destroy();
 	}
 	
 	private function left(s:Dynamic):Void
