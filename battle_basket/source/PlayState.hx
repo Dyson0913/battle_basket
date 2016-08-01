@@ -12,6 +12,7 @@ import flixel.math.FlxPoint;
 import visual_component.Adjust_tool;
 import visual_component.CharSelect;
 import visual_component.GameInput;
+import visual_component.Timer;
 
 import visual_component.Ball;
 import visual_component.Ground;
@@ -32,6 +33,7 @@ class PlayState extends FlxState
 	private var _opp_player:Character;
 	private var _ground:Ground;
 	private var _net:Net;
+	private var _timer:Timer;
 	
 	private var _adjust:Adjust_tool;
 	//TODO pack
@@ -87,6 +89,9 @@ class PlayState extends FlxState
 		_net = new Net();
 		add(_net);
 		
+		_timer = new Timer();
+		
+		
 		_player = new Character(150, -120, AssetPaths.sakula__png, 64, 108);
 		//_player.drag.set(150, -120);
 		//add(_player);
@@ -140,6 +145,7 @@ class PlayState extends FlxState
 		_score_board = new FlxSprite(660, -150, AssetPaths.scroe_board__png);
 		
 		
+		
 		_ready = new FlxGroup();
 		for (i in 0...(5))
 		{//560
@@ -158,7 +164,7 @@ class PlayState extends FlxState
 		add(_ready);
 		
 
-		//add(_adjust);
+		add(_adjust);
 		//Main._model.adjust_item.dispatch(_score_board);
 		
 		//Main._model.playing.dispatch(1);
@@ -213,7 +219,12 @@ class PlayState extends FlxState
 			
 			FlxTween.tween(_score_board, { y: _score_board.y +140 }, 1 );
 			add(_score_board);
+			
+			add(_timer);
+			
 			Main._model.playing.dispatch(1);
+			
+			
 			
 		}
 		else FlxTween.tween(myitem, { alpha: 0 }, 0.1);
