@@ -20,7 +20,6 @@ import option.CreditState;
 
 import model.Model;
 import flixel.addons.transition.Transition;
-import flixel.addons.plugin.FlxScrollingText;
 
 class GameMenu extends FlxTypedGroup<FlxSprite>
 {

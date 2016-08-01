@@ -48,7 +48,7 @@ class PlayState extends FlxState
 	private var _max_speend:FlxBounds<Float>;
 	
 	private var _gameinput:GameInput;
-	
+
 	private var _self_charact:FlxSprite;
 	private var _vs:FlxSprite;
 	private var _op_charact:FlxSprite;
@@ -56,7 +56,6 @@ class PlayState extends FlxState
 	private var _score_board:FlxSprite;
 	
 	public var _ready:FlxGroup;
-	
 	
 	override public function create():Void
 	{
@@ -158,6 +157,7 @@ class PlayState extends FlxState
 		}
 		add(_ready);
 		
+
 		//add(_adjust);
 		//Main._model.adjust_item.dispatch(_score_board);
 		
