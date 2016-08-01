@@ -6,15 +6,16 @@ import flixel.FlxSprite;
 import flixel.FlxState;
 import flixel.group.FlxGroup;
 import flixel.math.FlxMath;
+import visual_component.CharSelect;
 import visual_component.CreditList;
 
 import visual_component.GameInput;
 import visual_component.Adjust_tool;
 import flixel.addons.transition.FlxTransitionableState;
 
-class CreditState extends FlxTransitionableState
+class CharSelectState extends FlxTransitionableState
 {
-	private var _credit:CreditList;
+	private var _charselect:CharSelect;
 	private var _gameinput:GameInput;
 	
 	private var _adjust:Adjust_tool;
@@ -25,14 +26,14 @@ class CreditState extends FlxTransitionableState
 		
 		_adjust = new Adjust_tool();
 		
-		_credit = new CreditList();
-		add(_credit);
+		_charselect = new CharSelect();
+		add(_charselect);
 		
 		_gameinput = new GameInput();
 		add(_gameinput);
 		
-		_gameinput.mouse_pressed.add(comfirm);
-		_gameinput.A.add(comfirm);
+		_gameinput.mouse_pressed.add(click);
+		_gameinput.A.add(click);
 		
 		_gameinput.left.add(left);
 		_gameinput.right.add(right);
@@ -65,8 +66,9 @@ class CreditState extends FlxTransitionableState
 		
 	}
 	
-	private function comfirm(s:Dynamic):Void
+	private function click(s:Dynamic):Void
 	{
+		
 		
 	}
 	
@@ -77,6 +79,8 @@ class CreditState extends FlxTransitionableState
 	
 	override public function update(elapsed:Float):Void
 	{
+		
+		
 		super.update(elapsed);
 	}
 	

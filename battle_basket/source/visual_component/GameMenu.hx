@@ -4,13 +4,23 @@ package visual_component;
  * ...
  * @author hhg4092
  */
+import flash.text.Font;
+import flash.text.TextFormat;
+import flixel.addons.transition.TransitionData;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.FlxSprite;
+import flixel.math.FlxPoint;
+import flixel.math.FlxRect;
+import flixel.text.FlxText;
 import flixel.ui.FlxButton;
+import flixel.util.FlxColor;
+import option.CharSelectState;
 import option.CreditState;
 
 import model.Model;
+import flixel.addons.transition.Transition;
+import flixel.addons.plugin.FlxScrollingText;
 
 class GameMenu extends FlxTypedGroup<FlxSprite>
 {
@@ -19,6 +29,8 @@ class GameMenu extends FlxTypedGroup<FlxSprite>
 	private var _singleplayer:FlxButton;
 	private var _multiplayer:FlxButton;
 	private var _credit:FlxButton;
+	
+	private var _text:FlxText;
 	
 	public function new() 
 	{
@@ -47,6 +59,13 @@ class GameMenu extends FlxTypedGroup<FlxSprite>
 		add(_singleplayer);
 		add(_multiplayer);
 		add(_credit);
+
+		//#if mobile
+			//_text = new FlxText(20, 20,500, "1234567890AbCdEfGh 看看：中文显示是否正常！m(^_*)$", 8, true);
+			//_text.setFormat("/system/fonts/DroidSansFallback.ttf", 50, 0xFF0000);
+			//add(_text);
+		//#end
+		
 		
 		//event
 		Main._model.Menu.add(appear);
@@ -71,7 +90,11 @@ class GameMenu extends FlxTypedGroup<FlxSprite>
 	
 	private function singlplayer():Void
 	{
+		var fanin:TransitionData = new TransitionData(TransitionType.FADE, FlxColor.BLACK, 1.5,new FlxPoint(1,0));
+		var fanout:TransitionData = new TransitionData(TransitionType.FADE, FlxColor.BLACK, 1.5,new FlxPoint(1,0));
 		
+		FlxG.switchState(new CharSelectState(fanin, fanout));
+		//FlxG.switchState(new PlayState());
 	}
 	
 	private function multiplayer():Void
@@ -81,7 +104,10 @@ class GameMenu extends FlxTypedGroup<FlxSprite>
 	
 	private function credit():Void
 	{
-		FlxG.switchState(new CreditState());
+		var fanin:TransitionData = new TransitionData(TransitionType.FADE, FlxColor.BLACK, 1.5,new FlxPoint(1,0));
+		var fanout:TransitionData = new TransitionData(TransitionType.FADE, FlxColor.BLACK, 1.5,new FlxPoint(1,0));
+		
+		FlxG.switchState(new CreditState(fanin,fanout));
 	}
 	
 }

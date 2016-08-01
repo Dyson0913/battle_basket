@@ -34,7 +34,6 @@ class Net extends FlxTypedGroup<FlxSprite>
 		add(_net);
 		
 		//event
-		Main._model.NewRoundState.add(appear);
 		
 		//_net.meshVelocity.x = FlxG.random.float(0, _net.maxVelocity.x);
 		//_net.meshVelocity.x = 0;

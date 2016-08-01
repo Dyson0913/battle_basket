@@ -6,6 +6,7 @@ import haxe.Log;
 import flixel.FlxG;
 
 import model.Model;
+import flixel.input.touch.FlxTouchManager;
 
 class Main extends Sprite
 {
@@ -13,6 +14,7 @@ class Main extends Sprite
 	public function new()
 	{
 		super();
+		
 		
 		_model = new Model();
 		addChild(new FlxGame(1920, 1080, MenuState));

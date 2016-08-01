@@ -45,7 +45,7 @@ class MenuState extends FlxState
 		Main._model.Menu.dispatch(1);
 		
 		
-		add(_adjust);
+		//add(_adjust);
 		//Main._model.adjust_item.dispatch(_right);
 	}
 	

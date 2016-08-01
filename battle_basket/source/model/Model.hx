@@ -46,6 +46,8 @@ class Model extends FlxObject
 	public var _res_list:Array<String> = new Array<String>();
 	public var _betzone_name:Array<String> = new Array<String>();
 	
+	public var _char_id:Int;
+	
 	//base event
 	public var send_pack = new Signal<Dynamic>();
 	
@@ -108,6 +110,7 @@ class Model extends FlxObject
 		_bigwin_prob.push(0);
 		_bigwin_prob.push(0);		
 		
+		_char_id = 1;
 	}
 	
 	public function reset_model():Void

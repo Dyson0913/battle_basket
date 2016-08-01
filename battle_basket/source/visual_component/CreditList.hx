@@ -31,7 +31,7 @@ class CreditList extends FlxTypedGroup<FlxSprite>
 		add(_bg);
 		
 		_programer = new FlxText(670, 310, 700, "Director: Dyson0913\n art Director: TBA", 30, true);	
-		Model.font_format(_programer,50, FlxColor.WHITE,"left");		
+		Model.font_format(_programer,50, FlxColor.YELLOW,"left");		
 		add(_programer);
 		
 		

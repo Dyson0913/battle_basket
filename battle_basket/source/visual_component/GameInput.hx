@@ -68,8 +68,8 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 		_right.scale.set(2, 2);
 		add(_right);
 		
-		_shot = new FlxSprite(1700, 910).loadGraphic(AssetPaths.basketball_72__png);
-		_shot.scale.set(2, 2);
+		_shot = new FlxSprite(1790, 910).loadGraphic(AssetPaths.basketball_72__png);
+		_shot.scale.set(3, 3);
 		add(_shot);
 		
 		disappear(1);
@@ -80,6 +80,7 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 		Main._model.playing.add(appear);
 		Main._model.Settle.add(disappear);
 		
+		//Main._model.adjust_item.dispatch(_shot);
 	}
 	
 	private function appear(s:Dynamic):Void
