@@ -105,7 +105,7 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 	
 	override public function update(elapsed:Float):Void
 	{
-		#if (flash || js)
+		#if (flash || js || desktop)
 		if (FlxG.mouse.pressed) 
 		{
 			//_ball.fireFromAngle(_speed);

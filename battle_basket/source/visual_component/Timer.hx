@@ -24,26 +24,28 @@ class Timer extends FlxTypedGroup<FlxSprite>
 	
 	public function new() 
 	{
-		super();	
+		super();
 		
-		_ten = new FlxSprite(850, -60).loadGraphic(AssetPaths.timer_0__png);
+		_ten = new FlxSprite(850, -60);
+		_ten.loadGraphic(AssetPaths.time_numer__png, true, 160, 224);
 		_ten.scale.set(0.45, 0.45);
 		add(_ten);
 		
-		_one = new FlxSprite(906, -60).loadGraphic(AssetPaths.timer_0__png);
+		_one = new FlxSprite(906, -60);
+		_one.loadGraphic(AssetPaths.time_numer__png, true, 160, 224);
 		_one.scale.set(0.45, 0.45);
 		add(_one);
 		
 		//event
 		Main._model.Menu.add(appear);
-		Main._model.SelectRole.add(disappear);
 		Main._model.playing.add(appear);
 		Main._model.Settle.add(disappear);
 		Main._model.credit.add(disappear);
 		
 		_timer = new FlxTimer();
 		disappear(1);
-		Main._model.adjust_item.dispatch(_ten);
+		
+		//Main._model.adjust_item.dispatch(_ten);
 	}
 	
 	private function appear(s:Dynamic):Void
@@ -51,6 +53,13 @@ class Timer extends FlxTypedGroup<FlxSprite>
 		//Std.parseInt
 		Main._model._remain_time = 60;
 		_timer.start(1, timer_count, Main._model._remain_time);
+	}
+	
+	private function disappear(s:Dynamic):Void
+	{		
+		_ten.kill();
+		_one.kill();
+		_timer.cancel();
 	}
 	
 	private function timer_count(timer:FlxTimer):Void
@@ -62,9 +71,10 @@ class Timer extends FlxTypedGroup<FlxSprite>
 		
 		var ten:String = time_str.substr(0, 1);
 		var one:String = time_str.substr(1, 1);
+		//FlxG.log.add("justPressed ============= ");
 		
-		_ten.loadGraphic("assets/images/share/timer_num/timer_" + ten + ".png");
-		_one.loadGraphic("assets/images/share/timer_num/timer_" + one + ".png");
+		_ten.animation.frameIndex = Std.parseInt(ten);
+		_one.animation.frameIndex = Std.parseInt(one);
 		
 		Main._model.time_tick.dispatch(1);
 		if ( timer.loopsLeft == 0)
@@ -73,11 +83,6 @@ class Timer extends FlxTypedGroup<FlxSprite>
 		}
 	}
 	
-	private function disappear(s:Dynamic):Void
-	{		
-		_ten.kill();
-		_one.kill();
-		_timer.cancel();
-	}
+	
 	
 }
