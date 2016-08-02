@@ -10,6 +10,7 @@ import flixel.ui.FlxButton;
 import flixel.math.FlxMath;
 import flixel.math.FlxPoint;
 import visual_component.Adjust_tool;
+import visual_component.AvalibleItem;
 import visual_component.CharSelect;
 import visual_component.GameInput;
 import visual_component.Timer;
@@ -27,6 +28,8 @@ import flixel.FlxObject;
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 
+import model.RegularSetting;
+
 class PlayState extends FlxState
 {
 	private var _player:Character;
@@ -34,6 +37,7 @@ class PlayState extends FlxState
 	private var _ground:Ground;
 	private var _net:Net;
 	private var _timer:Timer;
+	private var _player_ball:AvalibleItem;
 	
 	private var _adjust:Adjust_tool;
 	//TODO pack
@@ -94,6 +98,8 @@ class PlayState extends FlxState
 		add(_net);
 		
 		_timer = new Timer();
+		
+		_player_ball = new AvalibleItem();
 		
 		
 		_player = new Character(150, -120, AssetPaths.sakula__png, 64, 108);
@@ -183,10 +189,9 @@ class PlayState extends FlxState
 		
 		Main._model.time_tick.add(timetick);
 		
-		//add(_adjust);
+		add(_adjust);
 		//Main._model.adjust_item.dispatch(_mario);
 		
-		//Main._model.playing.dispatch(1);
 	}
 	
 	private function timetick(s:Dynamic):Void
@@ -254,6 +259,9 @@ class PlayState extends FlxState
 			_traGroup.forEach(item_show);
 			add(_mario);
 			
+			add(_player_ball);
+			_player_ball.Start_CD();
+			
 			Main._model.playing.dispatch(1);
 			
 			
@@ -307,6 +315,7 @@ class PlayState extends FlxState
 	private function player_shut(s:Dynamic):Void
 	{
 		shot();
+		
 	}
 	
 	private function player_reset(s:Dynamic):Void

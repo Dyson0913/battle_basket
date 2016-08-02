@@ -5,12 +5,11 @@ package visual_component;
  * @author hhg4092
  */
 import flixel.FlxG;
+import flixel.util.FlxColor;
 import flixel.group.FlxGroup;
 import flixel.FlxSprite;
 
 import model.Model;
-
-import flixel.addons.effects.FlxClothSprite;
 
 class Ball extends FlxTypedGroup<FlxSprite>
 {
@@ -28,8 +27,6 @@ class Ball extends FlxTypedGroup<FlxSprite>
 			group.add(item);
 		}
 		
-		
-		//event
 	}
 	
 	private function appear(s:Dynamic):Void
