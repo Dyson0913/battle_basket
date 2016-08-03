@@ -50,7 +50,7 @@ class AvalibleItem extends FlxTypedGroup<FlxSprite>
 		//add(_dial);
 		//FlxTween.tween(_dial, { amount: 1.0 }, 2.0);
 		//event
-		Main._model.adjust_item.dispatch(cd_group.getFirstAvailable() );
+		//Main._model.adjust_item.dispatch(cd_group.getFirstAvailable() );
 	}
 	
 	private function appear(s:Dynamic):Void

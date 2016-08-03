@@ -15,7 +15,6 @@ import visual_component.CharSelect;
 import visual_component.GameInput;
 import visual_component.Timer;
 
-import visual_component.Ball;
 import visual_component.Ground;
 import visual_component.Net;
 import visual_component.Character;
@@ -42,8 +41,6 @@ class PlayState extends FlxState
 	private var _adjust:Adjust_tool;
 	//TODO pack
 	private var _ball_:FlxSprite;
-	
-	private var _testBall:Ball;
 	
 	private var _ballgroup:FlxGroup;
 	
@@ -91,9 +88,6 @@ class PlayState extends FlxState
 		_gameinput.right_release.add(player_reset);
 		_gameinput.up_release.add(player_reset);
 		
-		_testBall = new Ball();
-		add(_testBall);
-		
 		_net = new Net();
 		add(_net);
 		
@@ -111,7 +105,6 @@ class PlayState extends FlxState
 		
 		
 		_ball_ = new FlxSprite(500, 500, AssetPaths.basketball_48__png);
-
 		add(_ball_);
 		_ball_.kill();
 		
@@ -287,10 +280,15 @@ class PlayState extends FlxState
 		
 		FlxG.collide(_traGroup, _mario,tra_collect);
 		
-		FlxG.overlap(_testBall.group, _player,ball_collect);
+		FlxG.collide(_net.hoopleftPoint, _ball_);
+		FlxG.collide(_net.hooprightPoint, _ball_);
+		
+		//FlxG.overlap(_testBall.group, _player,ball_collect);
 		
 		super.update(elapsed);
 	}
+	
+	
 	
 	private function tra_collect(item:FlxObject, player:FlxObject):Void
 	{
@@ -335,11 +333,6 @@ class PlayState extends FlxState
 		_ball_.velocity.x = dir;
 		_ball_.velocity.y = -500;	
 		_ball_.elasticity = 0.8;
-	}
-	
-	private function ball_collect(item:FlxObject, player:FlxObject):Void
-	{
-		item.destroy();
 	}
 	
 }

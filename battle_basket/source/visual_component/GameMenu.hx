@@ -73,7 +73,7 @@ class GameMenu extends FlxTypedGroup<FlxSprite>
 		Main._model.Settle.add(disappear);
 		Main._model.credit.add(disappear);
 		
-		Main._model.adjust_item.dispatch(_credit);
+		//Main._model.adjust_item.dispatch(_credit);
 	}
 	
 	private function appear(s:Dynamic):Void

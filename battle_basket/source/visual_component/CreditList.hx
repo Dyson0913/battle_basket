@@ -49,7 +49,7 @@ class CreditList extends FlxTypedGroup<FlxSprite>
 		Main._model.Settle.add(disappear);
 		Main._model.credit.add(appear);
 		
-		Main._model.adjust_item.dispatch(_programer);
+		//Main._model.adjust_item.dispatch(_programer);
 	}
 	
 	private function appear(s:Dynamic):Void
