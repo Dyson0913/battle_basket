@@ -97,7 +97,7 @@ class PlayState extends FlxState
 		
 		
 		_player = new Character(150, -120, AssetPaths.sakula__png, 64, 108);
-		//_player.drag.set(150, -120);
+		//_player.drag.set(150,-10);
 		//add(_player);
 		
 		_opp_player = new Character(1700, -120, AssetPaths.sakula__png, 64, 108);
@@ -255,6 +255,9 @@ class PlayState extends FlxState
 			add(_player_ball);
 			_player_ball.Start_CD();
 			
+			_net.move_type(MoveStyle.VerticalMove,0);
+			_net.move_type(MoveStyle.Horizontal,1);
+			
 			Main._model.playing.dispatch(1);
 			
 			
@@ -282,6 +285,9 @@ class PlayState extends FlxState
 		
 		FlxG.collide(_net.hoopleftPoint, _ball_);
 		FlxG.collide(_net.hooprightPoint, _ball_);
+		
+		FlxG.collide(_net.hoopleftPoint2, _ball_);
+		FlxG.collide(_net.hooprightPoint2, _ball_);
 		
 		//FlxG.overlap(_testBall.group, _player,ball_collect);
 		
