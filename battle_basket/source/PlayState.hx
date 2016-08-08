@@ -13,6 +13,7 @@ import visual_component.Adjust_tool;
 import visual_component.AvalibleItem;
 import visual_component.CharSelect;
 import visual_component.GameInput;
+import visual_component.Score;
 import visual_component.Timer;
 
 import visual_component.Ground;
@@ -37,6 +38,7 @@ class PlayState extends FlxState
 	private var _net:Net;
 	private var _timer:Timer;
 	private var _player_ball:AvalibleItem;
+	private var _player_score:Score;
 	
 	private var _adjust:Adjust_tool;
 	//TODO pack
@@ -146,8 +148,7 @@ class PlayState extends FlxState
 		FlxTween.tween(_op_charact.scale, { x: 1.5, y:1.5 }, 1, { ease: FlxEase.bounceOut } );
 		
 		_score_board = new FlxSprite(660, -150, AssetPaths.scroe_board__png);
-		
-		
+		_player_score = new Score(750, -60, 2);
 		
 		
 		_ready = new FlxGroup();
@@ -245,12 +246,16 @@ class PlayState extends FlxState
 			add(_player);
 			add(_opp_player);
 			
-			FlxTween.tween(_score_board, { y: _score_board.y +140 }, 1 );
+			FlxTween.tween(_score_board, { y: _score_board.y +140 }, 1,{ onComplete: score_show }  );
 			add(_score_board);
+			
+			
 			
 			add(_timer);
 			_traGroup.forEach(item_show);
 			add(_mario);
+			
+			
 			
 			add(_player_ball);
 			_player_ball.Start_CD();
@@ -264,6 +269,12 @@ class PlayState extends FlxState
 			
 		}
 		else FlxTween.tween(myitem, { alpha: 0 }, 0.1);
+	}
+	
+	private function score_show(Tween:FlxTween):Void
+	{
+		//FlxTween.tween(_player_score, { y: _player_score.y +140 }, 1 );
+		add(_player_score);
 	}
 	
 	private function bullet_fac():FlxBullet
@@ -289,12 +300,23 @@ class PlayState extends FlxState
 		FlxG.collide(_net.hoopleftPoint2, _ball_);
 		FlxG.collide(_net.hooprightPoint2, _ball_);
 		
+		FlxG.overlap(_net.checkPoint, _ball_, check_point);
+		FlxG.overlap(_net.checkPoint2, _ball_, check_point);
+		
 		//FlxG.overlap(_testBall.group, _player,ball_collect);
 		
 		super.update(elapsed);
 	}
 	
-	
+	private function check_point(item:FlxObject, _ball_:FlxObject):Void
+	{
+		_ball_.kill();
+		FlxG.log.add("+1");
+		
+		var target:FlxSprite = cast(item, FlxSprite);
+		FlxG.log.add("item id" + target.ID);
+		
+	}
 	
 	private function tra_collect(item:FlxObject, player:FlxObject):Void
 	{
@@ -318,6 +340,7 @@ class PlayState extends FlxState
 	
 	private function player_shut(s:Dynamic):Void
 	{
+		_ball_.revive();
 		shot();
 		
 	}

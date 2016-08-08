@@ -30,7 +30,7 @@ class Adjust_tool extends FlxTypedGroup<FlxSprite>
 	
 	private var _control:FlxObject;
 	
-	private var _diff:Int = 10;
+	private var _diff:Int = 1;
 	
 	public function new() 
 	{
