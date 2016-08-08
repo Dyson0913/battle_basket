@@ -66,6 +66,9 @@ class PlayState extends FlxState
 	
 	public var _ready:FlxGroup;
 	
+	public var _test_ground:FlxSprite;
+	public var _test_ground2:FlxSprite;
+	
 	override public function create():Void
 	{
 		super.create();
@@ -150,6 +153,15 @@ class PlayState extends FlxState
 		_score_board = new FlxSprite(660, -150, AssetPaths.scroe_board__png);
 		_player_score = new Score(750, -60, 2);
 		
+		_test_ground = new FlxSprite(800, 670, AssetPaths.ground__png);
+		_test_ground.immovable = true;
+		_test_ground.allowCollisions = FlxObject.UP;
+		add(_test_ground);
+		
+		_test_ground2 = new FlxSprite(900, 550, AssetPaths.ground__png);
+		_test_ground2.immovable = true;
+		_test_ground2.allowCollisions = FlxObject.UP;
+		add(_test_ground2);
 		
 		_ready = new FlxGroup();
 		for (i in 0...(5))
@@ -184,7 +196,7 @@ class PlayState extends FlxState
 		Main._model.time_tick.add(timetick);
 		
 		add(_adjust);
-		//Main._model.adjust_item.dispatch(_mario);
+		Main._model.adjust_item.dispatch(_test_ground);
 		
 	}
 	
@@ -290,7 +302,12 @@ class PlayState extends FlxState
 		//TODO 主要遊戲訊息溝通
 		FlxG.collide(_ground.group, _ball_);
 		FlxG.collide(_ground.group, _player);
+		
+		FlxG.collide(_test_ground, _player);
+		FlxG.collide(_test_ground2, _player);
+		
 		FlxG.collide(_ground.group, _opp_player);
+
 		
 		FlxG.collide(_traGroup, _mario,tra_collect);
 		
