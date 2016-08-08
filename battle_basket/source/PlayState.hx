@@ -332,6 +332,7 @@ class PlayState extends FlxState
 		
 		var target:FlxSprite = cast(item, FlxSprite);
 		FlxG.log.add("item id" + target.ID);
+		Main._model.scoreNotify.dispatch(target.ID);
 		
 	}
 	

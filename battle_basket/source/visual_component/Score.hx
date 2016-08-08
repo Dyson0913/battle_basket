@@ -20,8 +20,7 @@ class Score extends FlxTypedGroup<FlxSprite>
 {
 	private var _digit:Array<FlxSprite>;
 	
-	private var _ten:FlxSprite;
-	private var _one:FlxSprite;
+	private var _score:Array<Int>;
 	
 	public function new(X:Float=0, Y:Float=0,digit:Int) 
 	{
@@ -29,6 +28,7 @@ class Score extends FlxTypedGroup<FlxSprite>
 		//_digit = new FlxSpriteGroup(X, Y, digit);
 		
 		_digit = new Array<FlxSprite>();
+		_score = new Array<Int>();
 		
 		var dis:Float = (160 - (160 * 0.45)) / 2;
 		for (i in 0...(digit))
@@ -39,8 +39,10 @@ class Score extends FlxTypedGroup<FlxSprite>
 			number.animation.frameIndex = 0;
 			add(number);
 			_digit.push(number);
+			_score.push(0);
 		}
 		//
+
 		
 		//event
 		Main._model.Menu.add(appear);
@@ -50,6 +52,8 @@ class Score extends FlxTypedGroup<FlxSprite>
 		
 		
 		disappear(1);
+		
+		Main._model.scoreNotify.add(score_in);
 		//Main._model.adjust_item.dispatch(_digit[0]);
 		
 	}
@@ -63,6 +67,18 @@ class Score extends FlxTypedGroup<FlxSprite>
 	private function disappear(s:Dynamic):Void
 	{		
 		
+	}
+	
+	private function score_in(s:Dynamic):Void
+	{
+		var shot_idx:Int = s;
+		_score[shot_idx] += 2;
+		var time_str:String =  Model.Format(_score[shot_idx], 2);		
+		
+		var ten:String = time_str.substr(0, 1);
+		var one:String = time_str.substr(1, 1);
+		_digit[0].animation.frameIndex = Std.parseInt(one);
+		_digit[1].animation.frameIndex = Std.parseInt(ten);
 	}
 	
 }

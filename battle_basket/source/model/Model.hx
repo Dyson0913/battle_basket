@@ -64,7 +64,8 @@ class Model extends FlxObject
 	public var Settle = new Signal<Dynamic>();
 	public var credit = new Signal<Dynamic>();
 	
-	
+	// event
+	public var scoreNotify = new Signal<Dynamic>();
 	
 	//for test
 	public var _packlist:Array<String> = new Array();
