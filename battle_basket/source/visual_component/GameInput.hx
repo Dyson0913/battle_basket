@@ -34,7 +34,7 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 	public var right_release = new Signal<Dynamic>();
 	
 	
-	private var _shot:FlxSprite;
+	public var _shot(default,default):FlxSprite;
 	
 	public var A = new Signal<Dynamic>();
 	public var B = new Signal<Dynamic>();
@@ -85,12 +85,12 @@ class GameInput extends FlxTypedGroup<FlxSprite>
 	
 	private function appear(s:Dynamic):Void
 	{
-		_up.revive();
+		//_up.revive();
 		//_down.revive();
-		_left.revive();
-		_right.revive();
-		
-		_shot.revive();
+		//_left.revive();
+		//_right.revive();
+		//
+		//_shot.revive();
 	}
 	
 	private function disappear(s:Dynamic):Void

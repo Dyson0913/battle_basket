@@ -4,7 +4,7 @@
 	
 	<app title="Battle_basket" file="Battlebasket" main="Main" version="0.0.1" company="dyson0913" />
 	
-	<meta title="Battlebasket" package="com.dysongame.Battlebasket" version="1.0.0" company="dyson" />
+	<meta title="Battlebasket" package="com.dysongame.Battlebasket_level" version="1.0.0" company="dyson" />
 	<!--The flixel preloader is not accurate in Chrome. You can use it regularly if you embed the swf into a html file
 		or you can set the actual size of your file manually at "FlxPreloaderBase-onUpdate-bytesTotal"-->
 	<app preloader="flixel.system.FlxPreloader" />

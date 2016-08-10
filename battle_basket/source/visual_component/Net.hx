@@ -4,22 +4,23 @@ package visual_component;
  * ...
  * @author hhg4092
  */
+import flixel.addons.display.FlxExtendedSprite;
 import flixel.FlxObject;
 import flixel.FlxG;
 import flixel.group.FlxGroup;
 import flixel.FlxSprite;
 
 import model.Model;
+import model.RegularSetting;
 
 import flixel.addons.effects.FlxClothSprite;
-
 
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
 
 class Net extends FlxTypedGroup<FlxSprite>
 {
-	private var _hoop:FlxSprite;
+	private var _hoop:FlxExtendedSprite;
 	//private var _net:FlxClothSprite;
 	public var hoopleftPoint:FlxSprite;
 	public var hooprightPoint:FlxSprite;
@@ -30,7 +31,7 @@ class Net extends FlxTypedGroup<FlxSprite>
 	public var hooprightPoint2:FlxSprite;
 	public var checkPoint2:FlxSprite;
 	
-	private var _hooparr:Array<FlxSprite>;
+	private var _hooparr:Array<FlxExtendedSprite>;
 	private var _hoopLeftarr:Array<FlxSprite>;
 	private var _hoopRighttarr:Array<FlxSprite>;
 	private var _check_point_arr:Array<FlxSprite>;
@@ -39,15 +40,18 @@ class Net extends FlxTypedGroup<FlxSprite>
 	{
 		super();
 		
-		_hooparr = new Array<FlxSprite>();
+		_hooparr = new Array<FlxExtendedSprite>();
 		_hoopLeftarr = new Array<FlxSprite>();
 		_hoopRighttarr = new Array<FlxSprite>();
 		_check_point_arr = new Array<FlxSprite>();
 		
-		_hoop = new FlxSprite(1400, 220).loadGraphic(AssetPaths.hoop__png);
+		_hoop = new FlxExtendedSprite(745, 206);
+		_hoop.loadGraphic(AssetPaths.hoop__png);
 		_hoop.scale.set(0.5, 0.5);
 		add(_hoop);
 		_hooparr.push(_hoop);
+		//RegularSetting.set_debug(_hoop);
+		
 		
 		hoopleftPoint = new FlxSprite(_hoop.x +160, _hoop.y + 215).loadGraphic(AssetPaths.hoopPoint__png);
 		hoopleftPoint.scale.set(0.5, 0.5);
@@ -68,28 +72,28 @@ class Net extends FlxTypedGroup<FlxSprite>
 		_check_point_arr.push(checkPoint);
 		//--------------------------------------------
 		
-		_hoop2 = new FlxSprite(40, 220).loadGraphic(AssetPaths.hoop__png);
-		_hoop2.scale.set(0.5, 0.5);
-		add(_hoop2);
-		_hooparr.push(_hoop2);
-		
-		hoopleftPoint2 = new FlxSprite(_hoop2.x +160, _hoop2.y + 215).loadGraphic(AssetPaths.hoopPoint__png);
-		hoopleftPoint2.scale.set(0.5, 0.5);
-		hoopleftPoint2.immovable = true;
-		add(hoopleftPoint2);
-		_hoopLeftarr.push(hoopleftPoint2);
-		
-		hooprightPoint2 = new FlxSprite(_hoop2.x +255, _hoop2.y + 215).loadGraphic(AssetPaths.hoopPoint__png);
-		hooprightPoint2.scale.set(0.5, 0.5);
-		hooprightPoint2.immovable = true;
-		add(hooprightPoint2);
-		_hoopRighttarr.push(hooprightPoint2);
-		
-		checkPoint2 = new FlxSprite(_hoop2.x +215, _hoop2.y + 260);
-		checkPoint2.scale.set(0.5, 0.5);
-		add(checkPoint2);
-		checkPoint2.ID = 1;
-		_check_point_arr.push(checkPoint2);
+		//_hoop2 = new FlxSprite(40, 220).loadGraphic(AssetPaths.hoop__png);
+		//_hoop2.scale.set(0.5, 0.5);
+		//add(_hoop2);
+		//_hooparr.push(_hoop2);
+		//
+		//hoopleftPoint2 = new FlxSprite(_hoop2.x +160, _hoop2.y + 215).loadGraphic(AssetPaths.hoopPoint__png);
+		//hoopleftPoint2.scale.set(0.5, 0.5);
+		//hoopleftPoint2.immovable = true;
+		//add(hoopleftPoint2);
+		//_hoopLeftarr.push(hoopleftPoint2);
+		//
+		//hooprightPoint2 = new FlxSprite(_hoop2.x +255, _hoop2.y + 215).loadGraphic(AssetPaths.hoopPoint__png);
+		//hooprightPoint2.scale.set(0.5, 0.5);
+		//hooprightPoint2.immovable = true;
+		//add(hooprightPoint2);
+		//_hoopRighttarr.push(hooprightPoint2);
+		//
+		//checkPoint2 = new FlxSprite(_hoop2.x +215, _hoop2.y + 260);
+		//checkPoint2.scale.set(0.5, 0.5);
+		//add(checkPoint2);
+		//checkPoint2.ID = 1;
+		//_check_point_arr.push(checkPoint2);
 		
 		//_net = new FlxClothSprite(853, 320, AssetPaths.net__png);
 		//_net.scale.set(0.2, 0.2);
@@ -105,7 +109,7 @@ class Net extends FlxTypedGroup<FlxSprite>
 		//_net.meshVelocity.x = FlxG.random.float(0, _net.maxVelocity.x);
 		//_net.meshVelocity.x = 0;
 		
-		//Main._model.adjust_item.dispatch(checkPoint);
+		Main._model.adjust_item.dispatch(_hoop);
 	}
 	
 	private function appear(s:Dynamic):Void

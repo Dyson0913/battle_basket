@@ -92,8 +92,8 @@ class GameMenu extends FlxTypedGroup<FlxSprite>
 		var fanin:TransitionData = new TransitionData(TransitionType.FADE, FlxColor.BLACK, 1.5,new FlxPoint(1,0));
 		var fanout:TransitionData = new TransitionData(TransitionType.FADE, FlxColor.BLACK, 1.5,new FlxPoint(1,0));
 		
-		FlxG.switchState(new CharSelectState(fanin, fanout));
-		//FlxG.switchState(new PlayState());
+		//FlxG.switchState(new CharSelectState(fanin, fanout));
+		FlxG.switchState(new LevelState());
 	}
 	
 	private function multiplayer():Void

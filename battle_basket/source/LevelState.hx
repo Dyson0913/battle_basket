@@ -1,5 +1,6 @@
 package ;
 
+import flixel.addons.display.FlxExtendedSprite;
 import flixel.FlxBasic;
 import flixel.FlxG;
 import flixel.FlxSprite;
@@ -41,17 +42,13 @@ class LevelState extends FlxState
 	private var _player_score:Score;
 	private var _opp_score:Score;
 	
+	private var _shot_icon:FlxExtendedSprite;
+	
 	private var _adjust:Adjust_tool;
+	
+	
 	//TODO pack
 	private var _ball_:FlxSprite;
-	
-	private var _ballgroup:FlxGroup;
-	
-	private var _ball:FlxWeapon;
-	private var _bullet_facotry:flixel.addons.weapon.FlxTypedWeapon<flixel.addons.weapon.FlxBullet> -> flixel.addons.weapon.FlxBullet;
-	private var _offset:FlxBounds<FlxPoint>;
-	private var _speed:FlxBounds<Float>;
-	private var _max_speend:FlxBounds<Float>;
 	
 	private var _gameinput:GameInput;
 
@@ -83,8 +80,9 @@ class LevelState extends FlxState
 		_gameinput = new GameInput();
 		add(_gameinput);
 		
-		_gameinput.mouse_pressed.add(player_shut);
-		_gameinput.A.add(player_shut);
+		_gameinput.mouse_pressed.add(mouse_preseed_event);
+		_gameinput.A.add(mouse_preseed_event);
+		_gameinput.A_release.add(player_shut);
 		
 		_gameinput.left.add(left);
 		_gameinput.right.add(right);
@@ -93,6 +91,14 @@ class LevelState extends FlxState
 		_gameinput.left_release.add(player_reset);
 		_gameinput.right_release.add(player_reset);
 		_gameinput.up_release.add(player_reset);
+		
+		_shot_icon = new FlxExtendedSprite(1713, 888, AssetPaths.basketball_72__png);
+		_shot_icon.scale.set(3.0, 3.0);
+		RegularSetting.set_debug(_shot_icon);
+		RegularSetting.set_mouse_up(_shot_icon, this.click);
+		add(_shot_icon);
+		
+		_gameinput._shot = _shot_icon;
 		
 		_net = new Net();
 		add(_net);
@@ -111,30 +117,6 @@ class LevelState extends FlxState
 		_ball_ = new FlxSprite(500, 500, AssetPaths.basketball_48__png);
 		add(_ball_);
 		_ball_.kill();
-		
-		//var p:FlxPoint = new FlxPoint();
-			//p.x = 10;
-			//p.y = 10;
-			//var q:FlxPoint = new FlxPoint();
-			//q.x = 10;
-			//q.y = 10;
-		//_offset = new FlxBounds<FlxPoint>(p,q);
-		
-		
-		//_speed = new FlxBounds<Float>(1.0, 2.0);
-		//_max_speend = new FlxBounds<Float>(1.0, 2.0);
-		//_bullet_facotry = new flixel.addons.weapon.FlxTypedWeapon<flixel.addons.weapon.FlxBullet>;
-		
-	    //for (i in 0...(1))
-		//{
-			//var _bullet:flixel.addons.weapon.FlxTypedWeapon<flixel.addons.weapon.FlxBullet> = new flixel.addons.weapon.FlxTypedWeapon<flixel.addons.weapon.FlxBullet>();
-			//_bullet.l(AssetPaths.basketball_32__png);
-			//_bullet_facotry.bind(_bullet);
-		//}
-		//add(_bullet_facotry);
-		
-		
-		//_ball = new FlxWeapon("name",_bullet_facotry,FlxWeaponFireFrom.PARENT(_player,_offset),FlxWeaponSpeedMode.ACCELERATION(_speed,_max_speend));
 		
 		_self_charact = new FlxSprite(200, 190,"assets/images/char_" + Main._model._char_id + ".png");
 		add(_self_charact);
@@ -168,11 +150,11 @@ class LevelState extends FlxState
 		{//560
 			var item:FlxSprite = new FlxSprite(i * 151 +580, 1110);
 			item.loadGraphic(AssetPaths.alpha__png,true, 137, 151);
-			if( i ==0) item.animation.frameIndex = 17;
-			if( i ==1) item.animation.frameIndex = 4;
+			if( i ==0) item.animation.frameIndex = 18;
+			if( i ==1) item.animation.frameIndex = 19;
 			if( i ==2) item.animation.frameIndex = 0;
-			if( i ==3) item.animation.frameIndex = 3;
-			if( i ==4) item.animation.frameIndex = 24;
+			if( i ==3) item.animation.frameIndex = 6;
+			if( i ==4) item.animation.frameIndex = 4;
 			item.ID = i;
 			item.kill();
 			add(item);
@@ -195,9 +177,15 @@ class LevelState extends FlxState
 		
 		Main._model.time_tick.add(timetick);
 		
-		add(_adjust);
-		Main._model.adjust_item.dispatch(_test_ground2);
+		//add(_adjust);
+		//Main._model.adjust_item.dispatch(_test_ground2);
 		
+	}
+	
+	public  function click(sp:FlxExtendedSprite,x:Int,y:Int):Void
+	{
+		FlxG.log.add("x = ");
+		player_shut(1);
 	}
 	
 	private function timetick(s:Dynamic):Void
@@ -271,8 +259,8 @@ class LevelState extends FlxState
 			add(_player_ball);
 			_player_ball.Start_CD();
 			
-			_net.move_type(MoveStyle.VerticalMove,0);
-			_net.move_type(MoveStyle.Horizontal,1);
+			//_net.move_type(MoveStyle.VerticalMove,0);
+			//_net.move_type(MoveStyle.Horizontal,1);
 			
 			Main._model.playing.dispatch(1);
 			
@@ -319,11 +307,11 @@ class LevelState extends FlxState
 		FlxG.collide(_net.hoopleftPoint, _ball_);
 		FlxG.collide(_net.hooprightPoint, _ball_);
 		
-		FlxG.collide(_net.hoopleftPoint2, _ball_);
-		FlxG.collide(_net.hooprightPoint2, _ball_);
+		//FlxG.collide(_net.hoopleftPoint2, _ball_);
+		//FlxG.collide(_net.hooprightPoint2, _ball_);
 		
 		FlxG.overlap(_net.checkPoint, _ball_, check_point);
-		FlxG.overlap(_net.checkPoint2, _ball_, check_point);
+		//FlxG.overlap(_net.checkPoint2, _ball_, check_point);
 		
 		//FlxG.overlap(_testBall.group, _player,ball_collect);
 		
@@ -333,10 +321,9 @@ class LevelState extends FlxState
 	private function check_point(item:FlxObject, _ball_:FlxObject):Void
 	{
 		_ball_.kill();
-		FlxG.log.add("+1");
 		
 		var target:FlxSprite = cast(item, FlxSprite);
-		FlxG.log.add("item id" + target.ID);
+		//FlxG.log.add("item id" + target.ID);
 		
 		if( target.ID ==0) _player_score.score_in(target.ID);
 		else _opp_score.score_in(target.ID);
@@ -365,6 +352,20 @@ class LevelState extends FlxState
 	private function up(s:Dynamic):Void
 	{
 		_player.jump();
+	}
+	
+	private function mouse_preseed_event(s:Dynamic):Void
+	{
+		//check mouse and target
+		var po:FlxPoint = _shot_icon.scale;
+		po.x += 0.03;
+		po.y += 0.03;
+		if ( po.x >= 5) 
+		{
+			po.x = 3;
+			po.y = 3;
+		}
+		_shot_icon.scale.set( po.x , po.y );
 	}
 	
 	private function player_shut(s:Dynamic):Void

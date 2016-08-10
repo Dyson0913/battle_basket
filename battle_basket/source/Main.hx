@@ -7,6 +7,7 @@ import flixel.FlxG;
 
 import model.Model;
 import flixel.input.touch.FlxTouchManager;
+import flixel.addons.plugin.FlxMouseControl;
 
 class Main extends Sprite
 {
@@ -19,6 +20,9 @@ class Main extends Sprite
 		_model = new Model();
 		addChild(new FlxGame(1920, 1080, MenuState));
 		
+		#if (flash || js || desktop)
+			FlxG.plugins.add(new FlxMouseControl());
+		#end
 		//FlxG.debugger.visible = true;
 		FlxG.camera.antialiasing = true;
 		//FlxG.log.add("width = "+FlxG.stage.width);
