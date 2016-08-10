@@ -39,6 +39,7 @@ class PlayState extends FlxState
 	private var _timer:Timer;
 	private var _player_ball:AvalibleItem;
 	private var _player_score:Score;
+	private var _opp_score:Score;
 	
 	private var _adjust:Adjust_tool;
 	//TODO pack
@@ -152,6 +153,7 @@ class PlayState extends FlxState
 		
 		_score_board = new FlxSprite(660, -150, AssetPaths.scroe_board__png);
 		_player_score = new Score(750, -60, 2);
+		_opp_score = new Score(1070, -60, 2);
 		
 		_test_ground = new FlxSprite(800, 670, AssetPaths.ground__png);
 		_test_ground.immovable = true;
@@ -195,8 +197,8 @@ class PlayState extends FlxState
 		
 		Main._model.time_tick.add(timetick);
 		
-		add(_adjust);
-		Main._model.adjust_item.dispatch(_test_ground);
+		//add(_adjust);
+		//Main._model.adjust_item.dispatch(_opp_score.getFirstAlive());
 		
 	}
 	
@@ -287,6 +289,7 @@ class PlayState extends FlxState
 	{
 		//FlxTween.tween(_player_score, { y: _player_score.y +140 }, 1 );
 		add(_player_score);
+		add(_opp_score);
 	}
 	
 	private function bullet_fac():FlxBullet
@@ -332,7 +335,13 @@ class PlayState extends FlxState
 		
 		var target:FlxSprite = cast(item, FlxSprite);
 		FlxG.log.add("item id" + target.ID);
-		Main._model.scoreNotify.dispatch(target.ID);
+		
+		if( target.ID ==0) _player_score.score_in(target.ID);
+		else _opp_score.score_in(target.ID);
+		
+		//
+		//Main._model.scoreNotify.dispatch(target.ID);
+		
 		
 	}
 	

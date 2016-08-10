@@ -69,7 +69,7 @@ class Score extends FlxTypedGroup<FlxSprite>
 		
 	}
 	
-	private function score_in(s:Dynamic):Void
+	public function score_in(s:Dynamic):Void
 	{
 		var shot_idx:Int = s;
 		_score[shot_idx] += 2;
