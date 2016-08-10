@@ -91,7 +91,8 @@ class CharSelect extends FlxTypedGroup<FlxSprite>
 	
 	private function play():Void
 	{
-		FlxG.switchState(new PlayState());
+		//FlxG.switchState(new PlayState());
+		FlxG.switchState(new LevelState());
 	}
 	
 	private function onDown(Sprite:BtnSprite)
