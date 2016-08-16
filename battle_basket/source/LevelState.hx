@@ -371,7 +371,9 @@ class LevelState extends FlxState
 	private function player_shut(s:Dynamic):Void
 	{
 		_ball_.revive();
+		
 		shot();
+		_shot_icon.scale.set(3.0, 3.0);
 		
 	}
 	
@@ -383,14 +385,23 @@ class LevelState extends FlxState
 	private function shot():Void
 	{
 		_ball_.revive();
-		var dir:Int = 500;
-		if (_player.facing == FlxObject.RIGHT) dir = 500;
-		else dir = -500;
+		
+		//ball angle & power ,calculat by _shot_icon.scale
+		var po:FlxPoint = _shot_icon.scale;
+		FlxG.log.add("po.x = "+po);
+		var dir:Float = (po.x - 3) * 500;		
+		FlxG.log.add("dir = "+dir);
+		if (_player.facing == FlxObject.RIGHT) 
+		{
+			
+		}
+		else dir = -dir;
+		
 		_ball_.x = _player.x +10;
 		_ball_.y = _player.y +10;
 		_ball_.acceleration.y = 980;
 		_ball_.velocity.x = dir;
-		_ball_.velocity.y = -500;	
+		_ball_.velocity.y = -dir;	
 		_ball_.elasticity = 0.8;
 	}
 	
