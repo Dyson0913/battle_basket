@@ -65,9 +65,6 @@ class LevelState extends FlxState
 	
 	private var _mario:FlxSprite;
 	
-	public var _traGroup:FlxGroup;
-	
-	
 	public var _test_ground:FlxSprite;
 	public var _test_ground2:FlxSprite;
 	
@@ -155,17 +152,6 @@ class LevelState extends FlxState
 		_test_ground2.allowCollisions = FlxObject.UP;
 		add(_test_ground2);
 		
-		
-		_traGroup = new FlxGroup();
-		for (i in 0...(5))
-		{
-			var item:FlxSprite = new FlxSprite(i * 140 +1300, 0,AssetPaths.trature__png);
-			item.kill();
-			add(item);
-			_traGroup.add(item);
-		}
-		add(_traGroup);
-
 		_mario =  new FlxSprite(1100, 0, AssetPaths.mario__png);
 		
 		_hint = new HintMessage();
@@ -189,7 +175,6 @@ class LevelState extends FlxState
 		add(_score_board);
 		
 		add(_timer);
-		_traGroup.forEach(RegularSetting.group_show);
 		add(_mario);		
 		
 		add(_player_ball);
@@ -243,8 +228,6 @@ class LevelState extends FlxState
 		FlxG.collide(_test_ground, _player);
 		FlxG.collide(_test_ground2, _opp_player);
 		
-		FlxG.collide(_traGroup, _mario,tra_collect);
-		
 		FlxG.collide(_net.hoopleftPoint, _ball_);
 		FlxG.collide(_net.hooprightPoint, _ball_);
 		
@@ -272,12 +255,6 @@ class LevelState extends FlxState
 		//
 		//Main._model.scoreNotify.dispatch(target.ID);
 		
-		
-	}
-	
-	private function tra_collect(item:FlxObject, player:FlxObject):Void
-	{
-		item.destroy();
 	}
 	
 	private function left(s:Dynamic):Void

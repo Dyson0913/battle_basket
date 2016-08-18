@@ -32,7 +32,12 @@ class RegularSetting extends FlxObject
 		target.kill();
 	}
 	
-
+	private static function destory_item(item:FlxObject, target:FlxObject):Void
+	{
+		item.destroy();
+	}
+	
+	
 	public static function set_mouse_up(sp:FlxExtendedSprite,callback:MouseCallback):Void
 	{
 		#if (flash || js || desktop)

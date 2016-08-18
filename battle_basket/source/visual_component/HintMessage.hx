@@ -20,13 +20,13 @@ import flixel.tweens.FlxEase;
 
 class HintMessage extends FlxTypedGroup<FlxSprite>
 {
-	public var _ready:FlxGroup;
+	public var group( default, null ):FlxGroup;
 	
 	public function new() 
 	{
 		super();
 		
-		_ready = new FlxGroup();
+		group = new FlxGroup();
 		for (i in 0...(5))
 		{//560
 			var item:FlxSprite = new FlxSprite(i * 151 +580, 1110);
@@ -39,7 +39,7 @@ class HintMessage extends FlxTypedGroup<FlxSprite>
 			item.ID = i;
 			item.kill();
 			add(item);
-			_ready.add(item);
+			group.add(item);
 		}
 		//add(_ready);
 		
@@ -66,7 +66,7 @@ class HintMessage extends FlxTypedGroup<FlxSprite>
 	
 	private function show(s:Dynamic):Void
 	{
-		_ready.forEach(effect);
+		group.forEach(effect);
 	}
 	
 	private function effect(item:FlxBasic):Void
@@ -84,7 +84,7 @@ class HintMessage extends FlxTypedGroup<FlxSprite>
 	
 	private function put_go(Tween:FlxTween):Void
 	{
-		_ready.forEach(effect_go);
+		group.forEach(effect_go);
 	}
 	
 	private function effect_go(item:FlxBasic):Void
