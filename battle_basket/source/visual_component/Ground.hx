@@ -25,16 +25,16 @@ class Ground extends FlxTypedGroup<FlxSprite>
 		_bg = new FlxSprite(0,0).loadGraphic(AssetPaths.playing_bg__jpg);
 		add(_bg);
 		
-		group = new FlxGroup();
-		for (i in 0...(8))
-		{
-			var ground:FlxSprite = new FlxSprite(i * 247, 800, AssetPaths.ground__png);
-			ground.immovable = true;
-			
-			add(ground);
-			
-			group.add(ground);
-		}
+		//group = new FlxGroup();
+		//for (i in 0...(8))
+		//{
+			//var ground:FlxSprite = new FlxSprite(i * 247, 800, AssetPaths.ground__png);
+			//ground.immovable = true;
+			//
+			//add(ground);
+			//
+			//group.add(ground);
+		//}
 		
 		//event
 	}

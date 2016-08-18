@@ -45,7 +45,7 @@ class Net extends FlxTypedGroup<FlxSprite>
 		_hoopRighttarr = new Array<FlxSprite>();
 		_check_point_arr = new Array<FlxSprite>();
 		
-		_hoop = new FlxExtendedSprite(745, 206);
+		_hoop = new FlxExtendedSprite(731, 313);
 		_hoop.loadGraphic(AssetPaths.hoop__png);
 		_hoop.scale.set(0.5, 0.5);
 		add(_hoop);

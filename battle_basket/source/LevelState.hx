@@ -14,6 +14,7 @@ import visual_component.Adjust_tool;
 import visual_component.AvalibleItem;
 import visual_component.CharSelect;
 import visual_component.GameInput;
+import visual_component.HintMessage;
 import visual_component.Score;
 import visual_component.Timer;
 
@@ -24,7 +25,9 @@ import visual_component.Character;
 import flixel.util.helpers.FlxBounds.FlxBounds;
 import flixel.addons.weapon.FlxWeapon;
 import flixel.addons.weapon.FlxBullet;
+import flixel.addons.display.shapes.FlxShapeCircle;
 import flixel.FlxObject;
+import flixel.util.FlxColor;
 
 import flixel.tweens.FlxTween;
 import flixel.tweens.FlxEase;
@@ -41,8 +44,10 @@ class LevelState extends FlxState
 	private var _player_ball:AvalibleItem;
 	private var _player_score:Score;
 	private var _opp_score:Score;
+	private var _hint:HintMessage;
 	
 	private var _shot_icon:FlxExtendedSprite;
+	private var _shot_icon_MAX:FlxShapeCircle;
 	
 	private var _adjust:Adjust_tool;
 	
@@ -62,7 +67,6 @@ class LevelState extends FlxState
 	
 	public var _traGroup:FlxGroup;
 	
-	public var _ready:FlxGroup;
 	
 	public var _test_ground:FlxSprite;
 	public var _test_ground2:FlxSprite;
@@ -92,11 +96,17 @@ class LevelState extends FlxState
 		_gameinput.right_release.add(player_reset);
 		_gameinput.up_release.add(player_reset);
 		
+		_shot_icon_MAX = new FlxShapeCircle(1598, 768, 150, { thickness:5, color:FlxColor.YELLOW }, FlxColor.BLUE);
+		_shot_icon_MAX.antialiasing = true;
+		add(_shot_icon_MAX);
+		
 		_shot_icon = new FlxExtendedSprite(1713, 888, AssetPaths.basketball_72__png);
 		_shot_icon.scale.set(3.0, 3.0);
 		RegularSetting.set_debug(_shot_icon);
 		RegularSetting.set_mouse_up(_shot_icon, this.click);
 		add(_shot_icon);
+		
+		
 		
 		_gameinput._shot = _shot_icon;
 		
@@ -145,22 +155,6 @@ class LevelState extends FlxState
 		_test_ground2.allowCollisions = FlxObject.UP;
 		add(_test_ground2);
 		
-		_ready = new FlxGroup();
-		for (i in 0...(5))
-		{//560
-			var item:FlxSprite = new FlxSprite(i * 151 +580, 1110);
-			item.loadGraphic(AssetPaths.alpha__png,true, 137, 151);
-			if( i ==0) item.animation.frameIndex = 18;
-			if( i ==1) item.animation.frameIndex = 19;
-			if( i ==2) item.animation.frameIndex = 0;
-			if( i ==3) item.animation.frameIndex = 6;
-			if( i ==4) item.animation.frameIndex = 4;
-			item.ID = i;
-			item.kill();
-			add(item);
-			_ready.add(item);
-		}
-		add(_ready);
 		
 		_traGroup = new FlxGroup();
 		for (i in 0...(5))
@@ -174,15 +168,38 @@ class LevelState extends FlxState
 
 		_mario =  new FlxSprite(1100, 0, AssetPaths.mario__png);
 		
+		_hint = new HintMessage();
+		add(_hint);
 		
 		Main._model.time_tick.add(timetick);
 		
-		//add(_adjust);
-		//Main._model.adjust_item.dispatch(_test_ground2);
+		add(_adjust);
+		Main._model.adjust_item.dispatch(_shot_icon_MAX);
 		
+		Main._model.playing.add(appear);
 	}
 	
-	public  function click(sp:FlxExtendedSprite,x:Int,y:Int):Void
+	public function appear(s:Dynamic):Void
+	{
+		FlxTween.tween(_self_charact, { alpha: 0 }, 1, { ease: FlxEase.cubeOut } );
+		FlxTween.tween(_vs, { alpha: 0 }, 1, { ease: FlxEase.cubeOut } );
+		FlxTween.tween(_op_charact, { alpha: 0 }, 1, { ease: FlxEase.cubeOut } );
+			
+		FlxTween.tween(_score_board, { y: _score_board.y +140 }, 1,{ onComplete: score_show }  );
+		add(_score_board);
+		
+		add(_timer);
+		_traGroup.forEach(RegularSetting.group_show);
+		add(_mario);		
+		
+		add(_player_ball);
+		_player_ball.Start_CD();
+		
+		//_net.move_type(MoveStyle.VerticalMove,0);
+		//_net.move_type(MoveStyle.Horizontal,1);
+	}
+	
+	public function click(sp:FlxExtendedSprite,x:Int,y:Int):Void
 	{
 		FlxG.log.add("x = ");
 		player_shut(1);
@@ -193,81 +210,9 @@ class LevelState extends FlxState
 		_mario.x += 10;
 	}
 	
-	private function item_show(item:FlxBasic):Void
-	{
-		var myitem:FlxSprite = cast(item, FlxSprite);
-		myitem.revive();
-	}
-	
 	private function put_ready(Tween:FlxTween):Void
-	{
-		_ready.forEach(effect);
-	}
-
-	private function effect(item:FlxBasic):Void
-	{
-		
-		var myitem:FlxSprite = cast(item, FlxSprite);
-		myitem.revive();
-		if ( myitem.ID == 4) FlxTween.tween(myitem, { y: myitem.y -530 }, 1, { ease: FlxEase.bounceOut,startDelay:0.1*myitem.ID,onComplete: ready_go } );
-		else FlxTween.tween(myitem, { y: myitem.y -530 }, 1, { ease: FlxEase.bounceOut,startDelay:0.1*myitem.ID } );
-	}
-	
-	private function ready_go(Tween:FlxTween):Void
-	{
-		FlxTween.tween(this, { }, 1, { onComplete: put_go } );
-		
-	}
-	
-	private function put_go(Tween:FlxTween):Void
-	{
-		_ready.forEach(effect_go);
-	}
-	
-	private function effect_go(item:FlxBasic):Void
-	{
-		var myitem:FlxSprite = cast(item, FlxSprite);
-		if (myitem.ID == 1) 
-		{
-			myitem.animation.frameIndex = 6;
-			FlxTween.tween(myitem.scale, { x: 3.0 ,y:3.0 }, 1, { ease: FlxEase.cubeOut } );
-			FlxTween.tween(myitem,{ alpha: 0 }, 1, { ease: FlxEase.cubeOut } );
-		}
-		else if (myitem.ID == 3) 
-		{
-			myitem.animation.frameIndex = 14;
-			FlxTween.tween(myitem.scale, { x: 3.0 , y:3.0}, 1, { ease: FlxEase.cubeOut } );
-			FlxTween.tween(myitem, { alpha: 0 }, 1, { ease: FlxEase.cubeOut } );
-			
-			FlxTween.tween(_self_charact, { alpha: 0 }, 1, { ease: FlxEase.cubeOut } );
-			FlxTween.tween(_vs, { alpha: 0 }, 1, { ease: FlxEase.cubeOut } );
-			FlxTween.tween(_op_charact, { alpha: 0 }, 1, { ease: FlxEase.cubeOut } );
-			
-		
-			
-			FlxTween.tween(_score_board, { y: _score_board.y +140 }, 1,{ onComplete: score_show }  );
-			add(_score_board);
-			
-			
-			
-			add(_timer);
-			_traGroup.forEach(item_show);
-			add(_mario);
-			
-			
-			
-			add(_player_ball);
-			_player_ball.Start_CD();
-			
-			//_net.move_type(MoveStyle.VerticalMove,0);
-			//_net.move_type(MoveStyle.Horizontal,1);
-			
-			Main._model.playing.dispatch(1);
-			
-			
-			
-		}
-		else FlxTween.tween(myitem, { alpha: 0 }, 0.1);
+	{		
+		Main._model.hintmsgNotify.dispatch(1);
 	}
 	
 	private function score_show(Tween:FlxTween):Void
@@ -294,13 +239,9 @@ class LevelState extends FlxState
 	override public function update(elapsed:Float):Void
 	{
 		//TODO 主要遊戲訊息溝通
-		FlxG.collide(_ground.group, _ball_);
-		FlxG.collide(_ground.group, _player);
 		
 		FlxG.collide(_test_ground, _player);
 		FlxG.collide(_test_ground2, _opp_player);
-		
-		FlxG.collide(_ground.group, _opp_player);
 		
 		FlxG.collide(_traGroup, _mario,tra_collect);
 		
@@ -356,6 +297,7 @@ class LevelState extends FlxState
 	
 	private function mouse_preseed_event(s:Dynamic):Void
 	{
+		
 		//check mouse and target
 		var po:FlxPoint = _shot_icon.scale;
 		po.x += 0.03;

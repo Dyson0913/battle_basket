@@ -65,6 +65,7 @@ class Model extends FlxObject
 	public var credit = new Signal<Dynamic>();
 	
 	// event
+	public var hintmsgNotify = new Signal<Dynamic>();
 	public var scoreNotify = new Signal<Dynamic>();
 	
 	//for test
