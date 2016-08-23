@@ -13,6 +13,7 @@ import flixel.math.FlxPoint;
 import visual_component.Adjust_tool;
 import visual_component.AvalibleItem;
 import visual_component.CharSelect;
+import visual_component.CollideItem;
 import visual_component.GameInput;
 import visual_component.HintMessage;
 import visual_component.Score;
@@ -37,14 +38,14 @@ import model.RegularSetting;
 class LevelState extends FlxState
 {
 	private var _player:Character;
-	private var _opp_player:Character;
 	private var _ground:Ground;
-	private var _net:Net;
+	//private var _net:Net;
 	private var _timer:Timer;
 	private var _player_ball:AvalibleItem;
-	private var _player_score:Score;
-	private var _opp_score:Score;
+	private var _player_score:Score;	
 	private var _hint:HintMessage;
+	private var _neil:CollideItem;
+	
 	
 	private var _shot_icon:FlxExtendedSprite;
 	private var _shot_icon_MAX:FlxShapeCircle;
@@ -66,7 +67,6 @@ class LevelState extends FlxState
 	private var _mario:FlxSprite;
 	
 	public var _test_ground:FlxSprite;
-	public var _test_ground2:FlxSprite;
 	
 	override public function create():Void
 	{
@@ -107,8 +107,8 @@ class LevelState extends FlxState
 		
 		_gameinput._shot = _shot_icon;
 		
-		_net = new Net();
-		add(_net);
+		//_net = new Net();
+		//add(_net);
 		
 		_timer = new Timer();
 		
@@ -116,10 +116,6 @@ class LevelState extends FlxState
 		
 		
 		_player = new Character(100, 400, AssetPaths.sakula__png, 64, 108);
-		
-		_opp_player = new Character(1750, 400, AssetPaths.sakula__png, 64, 108);
-		_opp_player.turn_left();
-		
 		
 		_ball_ = new FlxSprite(500, 500, AssetPaths.basketball_48__png);
 		add(_ball_);
@@ -139,23 +135,19 @@ class LevelState extends FlxState
 		FlxTween.tween(_op_charact.scale, { x: 1.5, y:1.5 }, 1, { ease: FlxEase.bounceOut } );
 		
 		_score_board = new FlxSprite(660, -150, AssetPaths.scroe_board__png);
-		_player_score = new Score(750, -60, 2);
-		_opp_score = new Score(1070, -60, 2);
+		_player_score = new Score(750, -60, 2);		
 		
 		_test_ground = new FlxSprite(-250, 670, AssetPaths.ground__png);
 		_test_ground.immovable = true;
 		_test_ground.allowCollisions = FlxObject.UP;
-		add(_test_ground);
-		
-		_test_ground2 = new FlxSprite(1920, 670, AssetPaths.ground__png);
-		_test_ground2.immovable = true;
-		_test_ground2.allowCollisions = FlxObject.UP;
-		add(_test_ground2);
+		add(_test_ground);		
 		
 		_mario =  new FlxSprite(1100, 0, AssetPaths.mario__png);
 		
 		_hint = new HintMessage();
 		add(_hint);
+		
+		_neil = new CollideItem();
 		
 		Main._model.time_tick.add(timetick);
 		
@@ -180,6 +172,8 @@ class LevelState extends FlxState
 		add(_player_ball);
 		_player_ball.Start_CD();
 		
+		add(_neil);
+		
 		//_net.move_type(MoveStyle.VerticalMove,0);
 		//_net.move_type(MoveStyle.Horizontal,1);
 	}
@@ -201,16 +195,12 @@ class LevelState extends FlxState
 	}
 	
 	private function score_show(Tween:FlxTween):Void
-	{
-		//FlxTween.tween(_player_score, { y: _player_score.y +140 }, 1 );
-		add(_player_score);
-		add(_opp_score);
+	{		
+		add(_player_score);		
 		
 		add(_player);
-		add(_opp_player);
 		
-		FlxTween.tween(_test_ground, { x: _test_ground.x +200 }, 0.5 ); 
-		FlxTween.tween(_test_ground2, { x: _test_ground2.x -200 }, 0.5 ); 
+		FlxTween.tween(_test_ground, { x: _test_ground.x +200 }, 0.5 ); 		
 	}
 	
 	private function bullet_fac():FlxBullet
@@ -225,16 +215,16 @@ class LevelState extends FlxState
 	{
 		//TODO 主要遊戲訊息溝通
 		
-		FlxG.collide(_test_ground, _player);
-		FlxG.collide(_test_ground2, _opp_player);
+		FlxG.collide(_test_ground, _player);		
 		
-		FlxG.collide(_net.hoopleftPoint, _ball_);
-		FlxG.collide(_net.hooprightPoint, _ball_);
+		//FlxG.collide(_net.hoopleftPoint, _ball_);
+		//FlxG.collide(_net.hooprightPoint, _ball_);
+		FlxG.collide(_neil, _ball_);
 		
 		//FlxG.collide(_net.hoopleftPoint2, _ball_);
 		//FlxG.collide(_net.hooprightPoint2, _ball_);
 		
-		FlxG.overlap(_net.checkPoint, _ball_, check_point);
+		//FlxG.overlap(_net.checkPoint, _ball_, check_point);
 		//FlxG.overlap(_net.checkPoint2, _ball_, check_point);
 		
 		//FlxG.overlap(_testBall.group, _player,ball_collect);
@@ -249,8 +239,7 @@ class LevelState extends FlxState
 		var target:FlxSprite = cast(item, FlxSprite);
 		//FlxG.log.add("item id" + target.ID);
 		
-		if( target.ID ==0) _player_score.score_in(target.ID);
-		else _opp_score.score_in(target.ID);
+		_player_score.score_in(target.ID);		
 		
 		//
 		//Main._model.scoreNotify.dispatch(target.ID);

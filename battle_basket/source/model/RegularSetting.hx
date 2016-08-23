@@ -1,5 +1,6 @@
 package model;
 
+import flash.geom.Point;
 import flixel.FlxG;
 import flixel.FlxBasic;
 import flixel.FlxObject;
@@ -35,6 +36,18 @@ class RegularSetting extends FlxObject
 	private static function destory_item(item:FlxObject, target:FlxObject):Void
 	{
 		item.destroy();
+	}
+	
+	public static function row_po(idx:Int, RowCnt:Int):Point
+	{		
+		var p:Point = new Point(idx % RowCnt, Math.floor(idx / RowCnt));
+		return p;
+	}
+	
+	public static function col_position(idx:Int, ColumnCnt:Int):Point
+	{		
+		var p:Point = new Point(Math.floor(idx / ColumnCnt), idx % ColumnCnt);
+		return p;		
 	}
 	
 	

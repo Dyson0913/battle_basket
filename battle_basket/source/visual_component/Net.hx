@@ -65,6 +65,7 @@ class Net extends FlxTypedGroup<FlxSprite>
 		add(hooprightPoint);
 		_hoopRighttarr.push(hooprightPoint);
 		
+		
 		checkPoint = new FlxSprite(_hoop.x +215, _hoop.y + 260);
 		checkPoint.scale.set(0.5, 0.5);
 		add(checkPoint);
